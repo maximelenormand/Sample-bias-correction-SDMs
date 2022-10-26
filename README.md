@@ -91,7 +91,7 @@ All the files are in csv format with column names and no row names (the value se
 
 - **ROI.R** is used to generate the ROI's real (or virtual) table (see above) based on the real (or virtual) projection and overlap tables
 - **Performance.R** is used to generate the performance's real (or virtual) table (see above) based on the real (or virtual) projection table
-- **Figures.R** is used to produce the figures of the manuscript (Figure 2 and Figures 4->8) and the Supporting Information (Figures S24->S29) 
+- **Figures.R** is used to produce the figures of the manuscript (Figure 2 and Figures 4->6) and the Supporting Information (Figures S24->S30) 
 - **Tables_SI.R** is used to produce the tables of Supporting Information (Tables S1->S6)
 
 ## Contributors

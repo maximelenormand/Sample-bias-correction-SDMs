@@ -49,27 +49,6 @@ mean(box[[2]]) # Average sample bias in Thau
 mean(box[[3]]) # Average sample bias in Trondheim
 
 
-# Figure S24 
-pdf("FigS24.pdf", width=9.5625, height=6.420604, useDingbats=FALSE)
-
-  par(mar=c(5,7,1,1))
- 
-  plot(spe$Size[spe$Site=="Trondheim"], spe$Bias[spe$Site=="Trondheim"], pch=16, col=colo[3], cex=1.5, xlim=c(0,600), ylim=c(-1,1), xlab="", ylab="", axes=FALSE) # Sample size x sample bias in Trondheim
-  par(new=TRUE)
-  plot(spe$Size[spe$Site=="Grote Nete"], spe$Bias[spe$Site=="Grote Nete"], pch=16, col=colo[1], cex=1.5, xlim=c(0,600), ylim=c(-1,1), xlab="", ylab="", axes=FALSE) # Sample size x sample bias in Grote Nete
-  par(new=TRUE)
-  plot(spe$Size[spe$Site=="Thau"], spe$Bias[spe$Site=="Thau"], pch=16, col=colo[2], cex=1.5, xlim=c(0,600), ylim=c(-1,1), xlab="", ylab="", axes=FALSE) # Sample size x sample bias in Thau
-  axis(1, las=1, cex.axis=1.75)
-  axis(2, las=1, cex.axis=1.75)
-  mtext("Sample size", 1, line=3.5, cex=2)
-  mtext("Sample bias", 2, line=4.5, cex=2)
-  box(lwd=1.5)
-
-  legend("bottomright",inset=c(0,0) , pch=16, col=colo, legend=c("Grote Nete","Thau","Trondheim"), cex=1.8, bty="n", xpd=NA, text.font=2, pt.cex=1.5)
-
-dev.off()
-
-
 # Figure 4
 box=list()  # a
 box[[1]]=roir$Schoener_Uncor_Cor[roir$Site=="Grote Nete"]  # Overlap between corrected and uncorrected in Grote Nete (Schoener)
@@ -209,216 +188,7 @@ bxp(b,at=c(1,2,3),outline=FALSE,boxcol=colo,whiskcol=colo,whisklty="solid",whisk
 dev.off()
 
 
-# Figure S25
-pdf("FigS25.pdf", width=14.677083, height=6.732283, useDingbats=FALSE)
-
-  par(mfrow=c(1,2))
-
-  # Scatterplot ROI Schoener - Peason
-  par(mar=c(5,7,1,1))
-  plot(roir$ROI_Schoener,roir$ROI_Pearson, type="p",col="steelblue3", pch=16, cex=2, xlab="", ylab="", axes=FALSE, xlim=c(0,1), ylim=c(0,1))
-  axis(1, las=1, cex.axis=1.75)
-  axis(2, las=1, cex.axis=1.75)
-  mtext("ROI (Schoener)", 1, line=3.25, cex=2)
-  mtext("ROI (Pearson)", 2, line=4, cex=2)
-  box(lwd=1.5)
-  abline(a=0, b=1, col="#CC6666", lwd=4)
-  legend("topleft",inset=c(-0.4,-0.1),legend="(a)",bty="n",cex=3,xpd=TRUE,text.font=2)
-
-  # Scatterplot ROI Schoener - Spearman
-  par(mar=c(5,7,1,1))
-  plot(roir$ROI_Schoener,roir$ROI_Spearman, type="p",col="steelblue3", pch=16, cex=2, xlab=" ", ylab="", axes=FALSE, xlim=c(0,1), ylim=c(0,1))
-  axis(1, las=1, cex.axis=1.75)
-  axis(2, las=1, cex.axis=1.75)
-  mtext("ROI (Schoener)", 1, line=3.25, cex=2)
-  mtext("ROI (Spearman)", 2, line=4, cex=2)
-  box(lwd=1.5)
-  abline(a=0, b=1, col="#CC6666", lwd=4)
-  legend("topleft",inset=c(-0.4,-0.1),legend="(b)",bty="n",cex=3,xpd=TRUE,text.font=2)
-
-dev.off()
-
-# Figure S26
-pval=cbind(roir$ROI_Schoener,roir$Schoener_pvalue) # Select ROI and p-value (Schoener)
-pval=pval[order(pval[,1]),] # Rank according to the ROI
-pval=cbind(pval,pval[,2])
-for(k in 1:dim(pval)[1]){ # Compute the fraction of p-value lower than 0.05 according to the ROI
-  pval[k,3]=sum(pval[k:dim(pval)[1],2]<0.05)/length(k:dim(pval)[1])
-}
-
-pdf("FigS26.pdf", width=9.38, height=7, useDingbats=FALSE)
-
-  par(mar=c(5,7,1,1))
-  plot(pval[,1],pval[,3],type="l",col="steelblue3",lwd=4, xlab="", ylab="", axes=FALSE)  
-  axis(1, las=1, cex.axis=1.75)
-  axis(2, las=1, cex.axis=1.75)
-  mtext("ROI (Shoener)", 1, line=3.5, cex=2)
-  mtext("Fraction of significant difference", 2, line=5, cex=2)
-  box(lwd=1.5)
-  abline(v=0.02, col="#CC6666", lwd=4)
-
-dev.off()
-
-
 # Figure 6
-pdf("Fig6.pdf", width=15.937500, height=6.19203, useDingbats=FALSE)
-
-  par(mfrow=c(1,2))
-
-  # a (ROI as a function of the sample size)
-  par(mar=c(5,6.5,1,2))
-  plot(roir$Nb.Occ[roir$Site=="Trondheim"], roir$ROI_Schoener[roir$Site=="Trondheim"], pch=16, col=colo[3], cex=1.5, xlim=c(0,600), ylim=c(-0.1,0.6), xlab="", ylab="", axes=FALSE)
-  par(new=TRUE)
-  plot(roir$Nb.Occ[roir$Site=="Grote Nete"], roir$ROI_Schoener[roir$Site=="Grote Nete"], pch=16, col=colo[1], cex=1.5, xlim=c(0,600), ylim=c(-0.1,0.6), xlab="", ylab="", axes=FALSE)
-  par(new=TRUE)
-  plot(roir$Nb.Occ[roir$Site=="Thau"], roir$ROI_Schoener[roir$Site=="Thau"], pch=16, col=colo[2], cex=1.5, xlim=c(0,600), ylim=c(-0.1,0.6), xlab="", ylab="", axes=FALSE)
-  axis(1, las=1, cex.axis=1.75)
-  axis(2, las=1, cex.axis=1.75)
-  mtext("Sample size", 1, line=3.5, cex=2)
-  mtext("ROI (Schoener)", 2, line=4.5, cex=2)
-  box(lwd=1.5)
-  abline(h=0.02, col="grey", lwd=3)
-  legend("topleft",inset=c(-0.325,-0.1),legend="(a)",bty="n",cex=2.5,xpd=TRUE,text.font=2)
-
-  legend("topright",inset=c(0,-0.01) , pch=16, col=colo, legend=c("Grote Nete","Thau","Trondheim"), cex=1.8, bty="n", xpd=NA, text.font=2, pt.cex=1.5)
-
-  # b (ROI as a function the sample bias)
-  par(mar=c(5,6.5,1,2))
-  plot(roir$Sample.Bias[roir$Site=="Trondheim"], roir$ROI_Schoener[roir$Site=="Trondheim"], pch=16, col=colo[3], cex=1.5, xlim=c(-1,1), ylim=c(-0.1,0.6), xlab="", ylab="", axes=FALSE)
-  par(new=TRUE)
-  plot(roir$Sample.Bias[roir$Site=="Grote Nete"], roir$ROI_Schoener[roir$Site=="Grote Nete"], pch=16, col=colo[1], cex=1.5, xlim=c(-1,1), ylim=c(-0.1,0.6), xlab="", ylab="", axes=FALSE)
-  par(new=TRUE)
-  plot(roir$Sample.Bias[roir$Site=="Thau"], roir$ROI_Schoener[roir$Site=="Thau"], pch=16, col=colo[2], cex=1.5, xlim=c(-1,1), ylim=c(-0.1,0.6), xlab="", ylab="", axes=FALSE)
-  axis(1, las=1, cex.axis=1.75)
-  axis(2, las=1, cex.axis=1.75)
-  mtext("Sample bias", 1, line=3.5, cex=2)
-  mtext("ROI (Schoener)", 2, line=4.5, cex=2)
-  box(lwd=1.5)
-  abline(h=0.02, col="grey", lwd=3)
-  legend("topleft",inset=c(-0.325,-0.1),legend="(b)",bty="n",cex=2.5,xpd=TRUE,text.font=2)
-
-dev.off()
-
-
-# Figure S27
-
-#a
-q=cut(roir$Nb.Occ, c(0,100,200,300,600), include.lowest=T, label=FALSE) # Divide the sample size into four categories
-box=list()  
-box[[1]]=roir$Schoener_pvalue[q==1]  # Distribution of p-value associated with a sample size ranging between 0 and 100
-box[[2]]=roir$Schoener_pvalue[q==2]  # Distribution of p-value associated with a sample size ranging between 100 and 200
-box[[3]]=roir$Schoener_pvalue[q==3]  # Distribution of p-value associated with a sample size ranging between 200 and 300
-box[[4]]=roir$Schoener_pvalue[q==4]  # Distribution of p-value associated with a sample size higher than 300
-b=boxplot(box, plot=F)
-for(i in 1:length(box)){
-   b$stats[1,i]=quantile(box[[i]],0.1,na.rm=TRUE)
-   b$stats[5,i]=quantile(box[[i]],0.9,na.rm=TRUE)
-}
-ba=b
-
-#b
-quantile(roir$Sample.Bias, seq(0,1,0.25))
-q=cut(roir$Sample.Bias, c(-1,-0.5,0,0.5,1), include.lowest=T, label=FALSE) # Divide the sample bias into four categories
-box=list()  
-box[[1]]=roir$Schoener_pvalue[q==1] # Distribution of p-value associated with a sample bias ranging between -1 and -0.5
-box[[2]]=roir$Schoener_pvalue[q==2] # Distribution of p-value associated with a sample bias ranging between -0.5 and 0
-box[[3]]=roir$Schoener_pvalue[q==3] # Distribution of p-value associated with a sample bias ranging between 0 and 0.5
-box[[4]]=roir$Schoener_pvalue[q==4] # Distribution of p-value associated with a sample bias ranging between 0.5 and 1
-b=boxplot(box, plot=F)
-for(i in 1:length(box)){
-   b$stats[1,i]=quantile(box[[i]],0.1,na.rm=TRUE)
-   b$stats[5,i]=quantile(box[[i]],0.9,na.rm=TRUE)
-}
-bb=b
-
-
-pdf("FigS27.pdf", width=17.947917, height=6.576444, useDingbats=FALSE)
-
-   par(mfrow=c(1,2))
-
-   # a
-   par(mar=c(6,6.5,1.5,1))
-       bxp(ba,at=c(1,2,3,4),outline=FALSE,boxcol="steelblue3",whiskcol="steelblue3",whisklty="solid",whisklwd=3,staplelwd=3,boxwex=0.5,staplecol="steelblue3",medbg="steelblue3",boxfill="steelblue3",cex.axis=1.5,las=1,axes=FALSE,xlab="",ylab="",ylim=c(0,1))
-   axis(1, at=c(1,2,3,4), labels=c("[0,100[","[100,200[","[200,300[","[300,600]"), las=1, cex.axis=1.5, padj=-0.3, tick=FALSE)
-   axis(2, las=1, cex.axis=1.5)
-   mtext("Sample size", 1, line=4, cex=2)
-   mtext("p-value (Schoener)", 2, line=4.25, cex=2)
-   legend("topleft",inset=c(-0.27,-0.12),legend="(a)",bty="n",cex=2.5,xpd=TRUE,text.font=2)
-
-   # b
-   par(mar=c(6,6.5,1.5,1)) 
-      bxp(bb,at=c(1,2,3,4),outline=FALSE,boxcol="steelblue3",whiskcol="steelblue3",whisklty="solid",whisklwd=3,staplelwd=3,boxwex=0.5,staplecol="steelblue3",medbg="steelblue3",boxfill="steelblue3",cex.axis=1.5,las=1,axes=FALSE,xlab="",ylab="",ylim=c(0,1))
-   axis(1, at=c(1,2,3,4), labels=c("[-1,-0.5[","[-0.5,0[","[0,0.5[","[0.5,1]"), las=1, cex.axis=1.5, padj=-0.3, tick=FALSE)
-   axis(2, las=1, cex.axis=1.5)
-   mtext("Sample bias", 1, line=4, cex=2)
-   mtext("p-value (Schoener)", 2, line=4.25, cex=2)
-   legend("topleft",inset=c(-0.27,-0.12),legend="(b)",bty="n",cex=2.5,xpd=TRUE,text.font=2)
-
-dev.off()
-
-
-# Figure 7
-tab=roir[,c(1,2,3,15)]     
-tab[,1]=paste0(tab[,1], "_", tab[,2])
-tab=tab[,-2]
-colnames(tab)=c("ID","Model","pvalue")
-temp=merge(tab$ID[!duplicated(tab$ID)],tab$Model[!duplicated(tab$Model)])
-temp=data.frame(ID=temp[,1],Model=temp[,2],pvalue=10)
-tab=rbind(tab,temp)
-tab=tab[!duplicated(paste0(tab$ID,"_",tab$Model)),]
-tab=as.matrix.xtabs(xtabs(tab[,3] ~ tab[,1] + tab[,2])) # p-value per species according to the modelling technique (10 = NA)
-
-tabin=tab<0.05 # binary version of tab (1 if pvalue lower than 0.05)
-tabin[tab==10]=NA # replace 10 per NA
-tabin=data.frame(tabin,Nbinf=apply(tabin,1,sum,na.rm=TRUE),Nb=apply(!is.na(tabin),1,sum)) # Add the number of values equal to 1 (Nbinf) and the number of not NA values (Nb)
-tabin$Ratio=tabin$Nbinf/tabin$Nb # Add a column Ratio between Nbinf and Nb
-tabin[tabin$Ratio<0.5,1:8]=1-tabin[tabin$Ratio<0.5,1:8] # Adapt binary values to the majority (1 if in the majority, O otherwise)
-tabin$Ratio[tabin$Ratio<0.5]=1-tabin$Ratio[tabin$Ratio<0.5] # Replace Ratio by 1-Ratio if Ratio is lower than 0.5 (in order to obtain the faction of models in the majority) 
-tabin$Site=do.call(rbind,strsplit(rownames(tabin),"_"))[,2] # Add Site
-
-box=NULL
-box[[1]]=tabin$Ratio[tabin$Site=="Grote Nete"] # Fraction of models in the majority in Grote Nete
-box[[2]]=tabin$Ratio[tabin$Site=="Thau"]       # Fraction of models in the majority in Thau
-box[[3]]=tabin$Ratio[tabin$Site=="Trondheim"]  # Fraction of models in the majority in Trondheim
-b=boxplot(box, plot=F) # Build boxplots
-for(i in 1:length(box)){
-   b$stats[1,i]=quantile(box[[i]],0.1,na.rm=TRUE)
-   b$stats[5,i]=quantile(box[[i]],0.9,na.rm=TRUE)
-}
-
-probmod=NULL
-probmod=rbind(probmod,apply(tabin[tabin$Site=="Grote Nete",1:8],2,sum,na.rm=TRUE)/apply(!is.na(tabin[tabin$Site=="Grote Nete",1:8]),2,sum)) # Fraction of species for wich each model is in the majority in Grote Nete
-probmod=rbind(probmod,apply(tabin[tabin$Site=="Thau",1:8],2,sum,na.rm=TRUE)/apply(!is.na(tabin[tabin$Site=="Thau",1:8]),2,sum)) # Fraction of species for wich each model is in the majority in Thau
-probmod=rbind(probmod,apply(tabin[tabin$Site=="Trondheim",1:8],2,sum,na.rm=TRUE)/apply(!is.na(tabin[tabin$Site=="Trondheim",1:8]),2,sum)) # Fraction of species for wich each model is in the majority in Trondheim
-probmod=probmod[,order(apply(probmod,2,mean))] # Order probmod
-
-
-pdf("Fig7.pdf", width=16.791667, height=7.158246, useDingbats=FALSE)
-
-  par(mfrow=c(1,2))
- 
-  # a
-  par(mar=c(4.5,6.5,1.5,1))   
-  bxp(b,at=c(1,2,3),outline=FALSE,boxcol=colo,whiskcol=colo,whisklty="solid",whisklwd=3,staplelwd=3,boxwex=0.65,staplecol=colo,medbg=colo,boxfill=colo,cex.axis=1.5,las=1,axes=FALSE,xlab="",ylab="",ylim=c(0.5,1))
-  axis(1, at=c(1,2,3), labels=c("Grote Nete","Thau","Trondheim"), las=1, cex.axis=1.5, padj=-0.5, tick=FALSE)
-  axis(2, las=1, cex.axis=1.5)
-  mtext("Case Study Site", 1, line=3, cex=2)
-  mtext("Fraction of models in the majority", 2, line=4.25, cex=2)
-  legend("topleft",inset=c(-0.295,-0.1),legend="(a)",bty="n",cex=2.5,xpd=TRUE,text.font=2)
-
-  # b
-  par(mar=c(4.5,6.5,1.5,1))
-  barplot(probmod, beside=TRUE, axes=FALSE, col=colo, border=colo, names.arg=rep(" ",8))
-  axis(1, at=seq(2.5,32.5,4), labels=colnames(probmod), las=1, cex.axis=1.5, padj=-0.5, tick=FALSE)
-  axis(2, las=1, cex.axis=1.5)
-  mtext("Modelling technique", 1, line=3, cex=2)
-  mtext("Fraction of species in the majority", 2, line=4.25, cex=2)
-  legend("topleft",inset=c(-0.295,-0.1),legend="(b)",bty="n",cex=2.5,xpd=TRUE,text.font=2)
-
-dev.off()
-
-
-# Figure 8
 ovtruebis=ovtrue[match(paste0(roiv[,1],"_",roiv[,2],"_",roiv[,3]),paste0(ovtrue[,1],"_",ovtrue[,2],"_",ovtrue[,3])),] # Virtual species "true" overlap table that matches with roiv
 perfvbis=perfv[match(paste0(roiv[,1],"_",roiv[,2],"_",roiv[,3]),paste0(perfv[,1],"_",perfv[,2],"_",perfv[,3])),]      # Virtual species performance table that matches with roiv
 
@@ -491,7 +261,7 @@ for(i in 1:length(box)){
    b$stats[5,i]=quantile(box[[i]],0.9,na.rm=TRUE)
 }
 
-pdf("Fig8.pdf", width=16.760417, height=7.054353, useDingbats=FALSE)
+pdf("Fig6.pdf", width=16.760417, height=7.054353, useDingbats=FALSE)
 
   par(mfrow=c(1,2))
 
@@ -530,7 +300,241 @@ pdf("Fig8.pdf", width=16.760417, height=7.054353, useDingbats=FALSE)
 dev.off()
 
 
+
+
+# Supporting Information ##############################################################################################################################
+
+# Figure S24 
+pdf("FigS24.pdf", width=9.5625, height=6.420604, useDingbats=FALSE)
+
+  par(mar=c(5,7,1,1))
+ 
+  plot(spe$Size[spe$Site=="Trondheim"], spe$Bias[spe$Site=="Trondheim"], pch=16, col=colo[3], cex=1.5, xlim=c(0,600), ylim=c(-1,1), xlab="", ylab="", axes=FALSE) # Sample size x sample bias in Trondheim
+  par(new=TRUE)
+  plot(spe$Size[spe$Site=="Grote Nete"], spe$Bias[spe$Site=="Grote Nete"], pch=16, col=colo[1], cex=1.5, xlim=c(0,600), ylim=c(-1,1), xlab="", ylab="", axes=FALSE) # Sample size x sample bias in Grote Nete
+  par(new=TRUE)
+  plot(spe$Size[spe$Site=="Thau"], spe$Bias[spe$Site=="Thau"], pch=16, col=colo[2], cex=1.5, xlim=c(0,600), ylim=c(-1,1), xlab="", ylab="", axes=FALSE) # Sample size x sample bias in Thau
+  axis(1, las=1, cex.axis=1.75)
+  axis(2, las=1, cex.axis=1.75)
+  mtext("Sample size", 1, line=3.5, cex=2)
+  mtext("Sample bias", 2, line=4.5, cex=2)
+  box(lwd=1.5)
+
+  legend("bottomright",inset=c(0,0) , pch=16, col=colo, legend=c("Grote Nete","Thau","Trondheim"), cex=1.8, bty="n", xpd=NA, text.font=2, pt.cex=1.5)
+
+dev.off()
+
+
+# Figure S25
+pdf("FigS25.pdf", width=15.937500, height=6.19203, useDingbats=FALSE)
+
+  par(mfrow=c(1,2))
+
+  # a (ROI as a function of the sample size)
+  par(mar=c(5,6.5,1,2))
+  plot(roir$Nb.Occ[roir$Site=="Trondheim"], roir$ROI_Schoener[roir$Site=="Trondheim"], pch=16, col=colo[3], cex=1.5, xlim=c(0,600), ylim=c(-0.1,0.6), xlab="", ylab="", axes=FALSE)
+  par(new=TRUE)
+  plot(roir$Nb.Occ[roir$Site=="Grote Nete"], roir$ROI_Schoener[roir$Site=="Grote Nete"], pch=16, col=colo[1], cex=1.5, xlim=c(0,600), ylim=c(-0.1,0.6), xlab="", ylab="", axes=FALSE)
+  par(new=TRUE)
+  plot(roir$Nb.Occ[roir$Site=="Thau"], roir$ROI_Schoener[roir$Site=="Thau"], pch=16, col=colo[2], cex=1.5, xlim=c(0,600), ylim=c(-0.1,0.6), xlab="", ylab="", axes=FALSE)
+  axis(1, las=1, cex.axis=1.75)
+  axis(2, las=1, cex.axis=1.75)
+  mtext("Sample size", 1, line=3.5, cex=2)
+  mtext("ROI (Schoener)", 2, line=4.5, cex=2)
+  box(lwd=1.5)
+  abline(h=0.02, col="grey", lwd=3)
+  legend("topleft",inset=c(-0.325,-0.1),legend="(a)",bty="n",cex=2.5,xpd=TRUE,text.font=2)
+
+  legend("topright",inset=c(0,-0.01) , pch=16, col=colo, legend=c("Grote Nete","Thau","Trondheim"), cex=1.8, bty="n", xpd=NA, text.font=2, pt.cex=1.5)
+
+  # b (ROI as a function the sample bias)
+  par(mar=c(5,6.5,1,2))
+  plot(roir$Sample.Bias[roir$Site=="Trondheim"], roir$ROI_Schoener[roir$Site=="Trondheim"], pch=16, col=colo[3], cex=1.5, xlim=c(-1,1), ylim=c(-0.1,0.6), xlab="", ylab="", axes=FALSE)
+  par(new=TRUE)
+  plot(roir$Sample.Bias[roir$Site=="Grote Nete"], roir$ROI_Schoener[roir$Site=="Grote Nete"], pch=16, col=colo[1], cex=1.5, xlim=c(-1,1), ylim=c(-0.1,0.6), xlab="", ylab="", axes=FALSE)
+  par(new=TRUE)
+  plot(roir$Sample.Bias[roir$Site=="Thau"], roir$ROI_Schoener[roir$Site=="Thau"], pch=16, col=colo[2], cex=1.5, xlim=c(-1,1), ylim=c(-0.1,0.6), xlab="", ylab="", axes=FALSE)
+  axis(1, las=1, cex.axis=1.75)
+  axis(2, las=1, cex.axis=1.75)
+  mtext("Sample bias", 1, line=3.5, cex=2)
+  mtext("ROI (Schoener)", 2, line=4.5, cex=2)
+  box(lwd=1.5)
+  abline(h=0.02, col="grey", lwd=3)
+  legend("topleft",inset=c(-0.325,-0.1),legend="(b)",bty="n",cex=2.5,xpd=TRUE,text.font=2)
+
+dev.off()
+
+
+# Figure S26
+
+#a
+q=cut(roir$Nb.Occ, c(0,100,200,300,600), include.lowest=T, label=FALSE) # Divide the sample size into four categories
+box=list()  
+box[[1]]=roir$Schoener_pvalue[q==1]  # Distribution of p-value associated with a sample size ranging between 0 and 100
+box[[2]]=roir$Schoener_pvalue[q==2]  # Distribution of p-value associated with a sample size ranging between 100 and 200
+box[[3]]=roir$Schoener_pvalue[q==3]  # Distribution of p-value associated with a sample size ranging between 200 and 300
+box[[4]]=roir$Schoener_pvalue[q==4]  # Distribution of p-value associated with a sample size higher than 300
+b=boxplot(box, plot=F)
+for(i in 1:length(box)){
+   b$stats[1,i]=quantile(box[[i]],0.1,na.rm=TRUE)
+   b$stats[5,i]=quantile(box[[i]],0.9,na.rm=TRUE)
+}
+ba=b
+
+#b
+quantile(roir$Sample.Bias, seq(0,1,0.25))
+q=cut(roir$Sample.Bias, c(-1,-0.5,0,0.5,1), include.lowest=T, label=FALSE) # Divide the sample bias into four categories
+box=list()  
+box[[1]]=roir$Schoener_pvalue[q==1] # Distribution of p-value associated with a sample bias ranging between -1 and -0.5
+box[[2]]=roir$Schoener_pvalue[q==2] # Distribution of p-value associated with a sample bias ranging between -0.5 and 0
+box[[3]]=roir$Schoener_pvalue[q==3] # Distribution of p-value associated with a sample bias ranging between 0 and 0.5
+box[[4]]=roir$Schoener_pvalue[q==4] # Distribution of p-value associated with a sample bias ranging between 0.5 and 1
+b=boxplot(box, plot=F)
+for(i in 1:length(box)){
+   b$stats[1,i]=quantile(box[[i]],0.1,na.rm=TRUE)
+   b$stats[5,i]=quantile(box[[i]],0.9,na.rm=TRUE)
+}
+bb=b
+
+pdf("FigS26.pdf", width=17.947917, height=6.576444, useDingbats=FALSE)
+
+   par(mfrow=c(1,2))
+
+   # a
+   par(mar=c(6,6.5,1.5,1))
+       bxp(ba,at=c(1,2,3,4),outline=FALSE,boxcol="steelblue3",whiskcol="steelblue3",whisklty="solid",whisklwd=3,staplelwd=3,boxwex=0.5,staplecol="steelblue3",medbg="steelblue3",boxfill="steelblue3",cex.axis=1.5,las=1,axes=FALSE,xlab="",ylab="",ylim=c(0,1))
+   axis(1, at=c(1,2,3,4), labels=c("[0,100[","[100,200[","[200,300[","[300,600]"), las=1, cex.axis=1.5, padj=-0.3, tick=FALSE)
+   axis(2, las=1, cex.axis=1.5)
+   mtext("Sample size", 1, line=4, cex=2)
+   mtext("p-value (Schoener)", 2, line=4.25, cex=2)
+   legend("topleft",inset=c(-0.27,-0.12),legend="(a)",bty="n",cex=2.5,xpd=TRUE,text.font=2)
+
+   # b
+   par(mar=c(6,6.5,1.5,1)) 
+      bxp(bb,at=c(1,2,3,4),outline=FALSE,boxcol="steelblue3",whiskcol="steelblue3",whisklty="solid",whisklwd=3,staplelwd=3,boxwex=0.5,staplecol="steelblue3",medbg="steelblue3",boxfill="steelblue3",cex.axis=1.5,las=1,axes=FALSE,xlab="",ylab="",ylim=c(0,1))
+   axis(1, at=c(1,2,3,4), labels=c("[-1,-0.5[","[-0.5,0[","[0,0.5[","[0.5,1]"), las=1, cex.axis=1.5, padj=-0.3, tick=FALSE)
+   axis(2, las=1, cex.axis=1.5)
+   mtext("Sample bias", 1, line=4, cex=2)
+   mtext("p-value (Schoener)", 2, line=4.25, cex=2)
+   legend("topleft",inset=c(-0.27,-0.12),legend="(b)",bty="n",cex=2.5,xpd=TRUE,text.font=2)
+
+dev.off()
+
+
+# Figure S27
+tab=roir[,c(1,2,3,15)]     
+tab[,1]=paste0(tab[,1], "_", tab[,2])
+tab=tab[,-2]
+colnames(tab)=c("ID","Model","pvalue")
+temp=merge(tab$ID[!duplicated(tab$ID)],tab$Model[!duplicated(tab$Model)])
+temp=data.frame(ID=temp[,1],Model=temp[,2],pvalue=10)
+tab=rbind(tab,temp)
+tab=tab[!duplicated(paste0(tab$ID,"_",tab$Model)),]
+tab=as.matrix.xtabs(xtabs(tab[,3] ~ tab[,1] + tab[,2])) # p-value per species according to the modelling technique (10 = NA)
+
+tabin=tab<0.05 # binary version of tab (1 if pvalue lower than 0.05)
+tabin[tab==10]=NA # replace 10 per NA
+tabin=data.frame(tabin,Nbinf=apply(tabin,1,sum,na.rm=TRUE),Nb=apply(!is.na(tabin),1,sum)) # Add the number of values equal to 1 (Nbinf) and the number of not NA values (Nb)
+tabin$Ratio=tabin$Nbinf/tabin$Nb # Add a column Ratio between Nbinf and Nb
+tabin[tabin$Ratio<0.5,1:8]=1-tabin[tabin$Ratio<0.5,1:8] # Adapt binary values to the majority (1 if in the majority, O otherwise)
+tabin$Ratio[tabin$Ratio<0.5]=1-tabin$Ratio[tabin$Ratio<0.5] # Replace Ratio by 1-Ratio if Ratio is lower than 0.5 (in order to obtain the faction of models in the majority) 
+tabin$Site=do.call(rbind,strsplit(rownames(tabin),"_"))[,2] # Add Site
+
+box=NULL
+box[[1]]=tabin$Ratio[tabin$Site=="Grote Nete"] # Fraction of models in the majority in Grote Nete
+box[[2]]=tabin$Ratio[tabin$Site=="Thau"]       # Fraction of models in the majority in Thau
+box[[3]]=tabin$Ratio[tabin$Site=="Trondheim"]  # Fraction of models in the majority in Trondheim
+b=boxplot(box, plot=F) # Build boxplots
+for(i in 1:length(box)){
+   b$stats[1,i]=quantile(box[[i]],0.1,na.rm=TRUE)
+   b$stats[5,i]=quantile(box[[i]],0.9,na.rm=TRUE)
+}
+
+probmod=NULL
+probmod=rbind(probmod,apply(tabin[tabin$Site=="Grote Nete",1:8],2,sum,na.rm=TRUE)/apply(!is.na(tabin[tabin$Site=="Grote Nete",1:8]),2,sum)) # Fraction of species for wich each model is in the majority in Grote Nete
+probmod=rbind(probmod,apply(tabin[tabin$Site=="Thau",1:8],2,sum,na.rm=TRUE)/apply(!is.na(tabin[tabin$Site=="Thau",1:8]),2,sum)) # Fraction of species for wich each model is in the majority in Thau
+probmod=rbind(probmod,apply(tabin[tabin$Site=="Trondheim",1:8],2,sum,na.rm=TRUE)/apply(!is.na(tabin[tabin$Site=="Trondheim",1:8]),2,sum)) # Fraction of species for wich each model is in the majority in Trondheim
+probmod=probmod[,order(apply(probmod,2,mean))] # Order probmod
+
+
+pdf("FigS27.pdf", width=16.791667, height=7.158246, useDingbats=FALSE)
+
+  par(mfrow=c(1,2))
+ 
+  # a
+  par(mar=c(4.5,6.5,1.5,1))   
+  bxp(b,at=c(1,2,3),outline=FALSE,boxcol=colo,whiskcol=colo,whisklty="solid",whisklwd=3,staplelwd=3,boxwex=0.65,staplecol=colo,medbg=colo,boxfill=colo,cex.axis=1.5,las=1,axes=FALSE,xlab="",ylab="",ylim=c(0.5,1))
+  axis(1, at=c(1,2,3), labels=c("Grote Nete","Thau","Trondheim"), las=1, cex.axis=1.5, padj=-0.5, tick=FALSE)
+  axis(2, las=1, cex.axis=1.5)
+  mtext("Case Study Site", 1, line=3, cex=2)
+  mtext("Fraction of models in the majority", 2, line=4.25, cex=2)
+  legend("topleft",inset=c(-0.295,-0.1),legend="(a)",bty="n",cex=2.5,xpd=TRUE,text.font=2)
+
+  # b
+  par(mar=c(4.5,6.5,1.5,1))
+  barplot(probmod, beside=TRUE, axes=FALSE, col=colo, border=colo, names.arg=rep(" ",8))
+  axis(1, at=seq(2.5,32.5,4), labels=colnames(probmod), las=1, cex.axis=1.5, padj=-0.5, tick=FALSE)
+  axis(2, las=1, cex.axis=1.5)
+  mtext("Modelling technique", 1, line=3, cex=2)
+  mtext("Fraction of species in the majority", 2, line=4.25, cex=2)
+  legend("topleft",inset=c(-0.295,-0.1),legend="(b)",bty="n",cex=2.5,xpd=TRUE,text.font=2)
+
+dev.off()
+
+
 # Figure S28
+pdf("FigS28.pdf", width=14.677083, height=6.732283, useDingbats=FALSE)
+
+  par(mfrow=c(1,2))
+
+  # Scatterplot ROI Schoener - Peason
+  par(mar=c(5,7,1,1))
+  plot(roir$ROI_Schoener,roir$ROI_Pearson, type="p",col="steelblue3", pch=16, cex=2, xlab="", ylab="", axes=FALSE, xlim=c(0,1), ylim=c(0,1))
+  axis(1, las=1, cex.axis=1.75)
+  axis(2, las=1, cex.axis=1.75)
+  mtext("ROI (Schoener)", 1, line=3.25, cex=2)
+  mtext("ROI (Pearson)", 2, line=4, cex=2)
+  box(lwd=1.5)
+  abline(a=0, b=1, col="#CC6666", lwd=4)
+  legend("topleft",inset=c(-0.4,-0.1),legend="(a)",bty="n",cex=3,xpd=TRUE,text.font=2)
+
+  # Scatterplot ROI Schoener - Spearman
+  par(mar=c(5,7,1,1))
+  plot(roir$ROI_Schoener,roir$ROI_Spearman, type="p",col="steelblue3", pch=16, cex=2, xlab=" ", ylab="", axes=FALSE, xlim=c(0,1), ylim=c(0,1))
+  axis(1, las=1, cex.axis=1.75)
+  axis(2, las=1, cex.axis=1.75)
+  mtext("ROI (Schoener)", 1, line=3.25, cex=2)
+  mtext("ROI (Spearman)", 2, line=4, cex=2)
+  box(lwd=1.5)
+  abline(a=0, b=1, col="#CC6666", lwd=4)
+  legend("topleft",inset=c(-0.4,-0.1),legend="(b)",bty="n",cex=3,xpd=TRUE,text.font=2)
+
+dev.off()
+
+
+# Figure S29
+pval=cbind(roir$ROI_Schoener,roir$Schoener_pvalue) # Select ROI and p-value (Schoener)
+pval=pval[order(pval[,1]),] # Rank according to the ROI
+pval=cbind(pval,pval[,2])
+for(k in 1:dim(pval)[1]){ # Compute the fraction of p-value lower than 0.05 according to the ROI
+  pval[k,3]=sum(pval[k:dim(pval)[1],2]<0.05)/length(k:dim(pval)[1])
+}
+
+pdf("FigS29.pdf", width=9.38, height=7, useDingbats=FALSE)
+
+  par(mar=c(5,7,1,1))
+  plot(pval[,1],pval[,3],type="l",col="steelblue3",lwd=4, xlab="", ylab="", axes=FALSE)  
+  axis(1, las=1, cex.axis=1.75)
+  axis(2, las=1, cex.axis=1.75)
+  mtext("ROI (Shoener)", 1, line=3.5, cex=2)
+  mtext("Fraction of significant difference", 2, line=5, cex=2)
+  box(lwd=1.5)
+  abline(v=0.02, col="#CC6666", lwd=4)
+
+dev.off()
+
+
+# Figure S30
 box=NULL
 box[[1]]=ovtrue$Pearson_pvalue[ovtrue$Site=="Grote Nete"] # Pearson p-value (true distribution) in Grote Nete
 box[[2]]=ovtrue$Pearson_pvalue[ovtrue$Site=="Thau"]       # Pearson p-value (true distribution) in Thau
@@ -553,7 +557,7 @@ for(i in 1:length(box)){
 }
 bb=b
 
-pdf("FigS28.pdf", width=16.791667, height=7.158246, useDingbats=FALSE)
+pdf("FigS30.pdf", width=16.791667, height=7.158246, useDingbats=FALSE)
 
   par(mfrow=c(1,2))
 
@@ -578,77 +582,6 @@ pdf("FigS28.pdf", width=16.791667, height=7.158246, useDingbats=FALSE)
   abline(h=0.05, col="grey", lwd=3)
 
 dev.off()
-
-
-# Figure S29
-perfrbis=perfr[match(paste0(roir[,1],"_",roir[,2],"_",roir[,3]),paste0(perfr[,1],"_",perfr[,2],"_",perfr[,3])),]      # Virtual species performance table that matches with roiv
-
-print(c(dim(roir)[1],dim(perfrbis)[1],sum(paste0(roir[,1],"_",roir[,2],"_",roir[,3])==paste0(perfrbis[,1],"_",perfrbis[,2],"_",perfrbis[,3])))) # Check matches
-
-
-roi=roirSchoener
-
-
-rpvalroi=roir$Schoener_pvalue       # Schoener p-value (overlap corrected/uncorrected versus overlap corrected between runs)
-rpvalboyce=perfrbis$Boyce_pvalue    # Boyce p-value (performance)
-rpvalcauc=perfrbis$cAUC_pvalue      # cAUC p-value (performance)
-rpvalauc=perfrbis$AUC_pvalue        # AUC p-value (performance)
-rpvaltss=perfrbis$TSS_pvalue        # TSS p-value (performance)
-
-pall=NULL
-for(th in seq(0.01,0.1,0.01)){ # Loop over different thershold to compute the accuracy (fraction of TP and TN)
-
-  pth=th
-
-  conf=table(rpvalroi<th,rpvalboyce<th)
-  p=sum(diag(conf))/sum(conf)
-
-  pth=c(pth,p)
-
-  conf=table(rpvalroi<th,rpvalcauc<th)
-  p=sum(diag(conf))/sum(conf)
-
-  pth=c(pth,p)
-
-  conf=table(rpvalroi<th,rpvalauc<th)
-  p=sum(diag(conf))/sum(conf)
-
-  pth=c(pth,p)
-
-  conf=table(rpvalroi<th,rpvaltss<th)
-  p=sum(diag(conf))/sum(conf)
-
-  pth=c(pth,p)
-
-  pall=rbind(pall,pth)
-
-}
-
-
-pdf("FigS29.pdf", width=9.812500, height=7.688101, useDingbats=FALSE)
-
-  coll=brewer.pal(5, "Set2")
-
-  par(mar=c(4.5,6.5,1.5,1)) 
-  plot(pall[,c(1,2)], type="l", col=coll[2], lty=2, lwd=4, ylim=c(0,0.6),axes=FALSE,xlab="",ylab="")
-  par(new=TRUE)
-  plot(pall[,c(1,3)], type="l", col=coll[3], lty=3, lwd=4, ylim=c(0,0.6),axes=FALSE,xlab="",ylab="")
-  par(new=TRUE)
-  plot(pall[,c(1,4)], type="l", col=coll[4], lty=4, lwd=4, ylim=c(0,0.6),axes=FALSE,xlab="",ylab="")
-  par(new=TRUE)
-  plot(pall[,c(1,5)], type="l", col=coll[5], lty=5, lwd=4, ylim=c(0,0.6),axes=FALSE,xlab="",ylab="")
-  axis(1, las=1, cex.axis=1.5)
-  axis(2, las=1, cex.axis=1.5)
-  mtext("p-value threshold", 1, line=3, cex=2)
-  mtext("Accuracy", 2, line=4.25, cex=2)
-  box(lwd=1.5)
-
-  legend("bottomleft", inset=c(0.01,-0.01), legend=c("Boyce","cAUC","AUC","TSS"), col=coll[2:5], lty=2:5, lwd=4, bty="n", cex=2)
-
-dev.off()
-
-
-
 
 
 
